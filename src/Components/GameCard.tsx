@@ -17,7 +17,6 @@ const GameCard = ({ game }: GameCardProps) => {
     const quantity = useSelector((state: RootState) =>
         state.cart.cart.find((item) => item.id === game.id)?.quantity ?? 0
     );
-
     return (
         <Card
             sx={{

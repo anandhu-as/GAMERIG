@@ -24,7 +24,6 @@ export type GameCardProps = {
     rating: number;
     quantity: number;
   };
-
 };
 export type cartItem = {
   id: string | number;
@@ -35,3 +34,8 @@ export type cartItem = {
   rating: number;
   quantity: number;
 };
+export type CartProp = {
+  open: boolean;
+  toggleDrawer: (newOpen: boolean) => () => void;
+};
+
