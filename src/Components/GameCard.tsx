@@ -13,7 +13,6 @@ import { type AppDispatch, type RootState } from "../redux/store/store";
 import { decrementCartCount, incrementCartCount } from "../redux/features/cart/cartSlice";
 const GameCard = ({ game }: GameCardProps) => {
     const dispatch = useDispatch<AppDispatch>();
-
     const quantity = useSelector((state: RootState) =>
         state.cart.cart.find((item) => item.id === game.id)?.quantity ?? 0
     );

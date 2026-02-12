@@ -9,12 +9,12 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import DeleteIcon from "@mui/icons-material/Delete";
 import type { CartProp } from "../types/types";
-import { useSelector } from "react-redux";
-import type { RootState } from "../redux/store/store";
-
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "../redux/store/store";
+import { decrementCartCount, incrementCartCount, removeFromCart } from "../redux/features/cart/cartSlice";
 const Cart = ({ open, toggleDrawer }: CartProp) => {
+    const dispatch = useDispatch<AppDispatch>();
     const cartValues = useSelector((state: RootState) => state.cart.cart);
-
     return (
         <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
             <Box
@@ -73,18 +73,18 @@ const Cart = ({ open, toggleDrawer }: CartProp) => {
                                         }}
                                     >
                                         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                                            <IconButton size="small" sx={{ color: "#fff" }}>
-                                                <RemoveIcon fontSize="small" />
+                                            <IconButton size="small" sx={{ color: "#fff" }} onClick={() => dispatch(decrementCartCount(item))}> 
+                                                <RemoveIcon fontSize="small"  />
                                             </IconButton>
 
                                             <Typography>{item.quantity}</Typography>
 
-                                            <IconButton size="small" sx={{ color: "#fff" }}>
+                                            <IconButton size="small" sx={{ color: "#fff" }} onClick={() => dispatch(incrementCartCount(item))}>
                                                 <AddIcon fontSize="small" />
                                             </IconButton>
                                         </Box>
 
-                                        <IconButton sx={{ color: "#ff4d4d" }}>
+                                        <IconButton sx={{ color: "#ff4d4d" }} onClick={()=>dispatch(removeFromCart(item))}>
                                             <DeleteIcon />
                                         </IconButton>
                                     </Box>
@@ -93,7 +93,6 @@ const Cart = ({ open, toggleDrawer }: CartProp) => {
                         </Box>
                     ))}
                 </Box>
-                
                 <Divider sx={{ backgroundColor: "#333", my: 2 }} />
             </Box>
         </Drawer>
