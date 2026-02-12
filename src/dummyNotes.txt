@@ -1,0 +1,35 @@
+import { useDispatch, useSelector } from "react-redux";
+import { fetchGames } from "./redux/features/games/gameSlice";
+import { type AppDispatch, type RootState } from "./redux/store/store";
+
+
+
+const App = () => {
+  
+  const dispatch = useDispatch<AppDispatch>();
+
+
+  const games = useSelector((state: RootState) => state.games.games);
+console.log(games);
+
+  const handleFetch = () => {
+
+    dispatch(fetchGames());
+  };
+
+  return (
+    <div>
+      <button onClick={handleFetch}>Fetch Gamessss</button>
+
+      <ul>
+        {games.map((game) => (
+          <div key={game.id}>{game.title}
+          <img src={game.thumbnail} alt="" />
+          </div>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default App;
