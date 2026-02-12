@@ -35,7 +35,9 @@ const Cart = ({ open, toggleDrawer }: CartProp) => {
                     Your Cart
                 </Typography>
 
-                <Box sx={{ flex: 1, overflowY: "auto" }}>
+               {cartValues.length<1 ? (
+                <h1>your cart is empty</h1>
+               ): <Box sx={{ flex: 1, overflowY: "auto" }}>
                     {cartValues.map((item) => (
                         <Box
                             key={item.id}
@@ -92,7 +94,7 @@ const Cart = ({ open, toggleDrawer }: CartProp) => {
                             </Box>
                         </Box>
                     ))}
-                </Box>
+                </Box>}
                 <Divider sx={{ backgroundColor: "#333", my: 2 }} />
             </Box>
         </Drawer>
