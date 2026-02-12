@@ -15,6 +15,14 @@ const cartSlice = createSlice({
         ? (existingItem.quantity += 1)
         : state.cart.push({ ...action.payload, quantity: 1 });
     },
+     decrementCartCount: (state, action: PayloadAction<cartItem>) => {
+      const existingItem = state.cart.find(
+        (item) => item.id === action.payload.id,
+      );
+      existingItem
+        ? (existingItem.quantity += 1)
+        : state.cart.push({ ...action.payload, quantity: 1 });
+    },
   },
 });
 export default cartSlice.reducer;
