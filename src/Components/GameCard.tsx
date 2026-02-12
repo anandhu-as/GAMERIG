@@ -1,15 +1,16 @@
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import { type GameCardProps } from "../types/types";
+import {
+    Card,
+    CardActions,
+    CardContent,
+    CardMedia,
+    Button,
+    Typography,
+    Box,
+} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+import { type GameCardProps } from "../types/types";
 import { type AppDispatch, type RootState } from "../redux/store/store";
-import { incrementCartCount } from "../redux/features/cart/cartSlice";
-
+import { decrementCartCount, incrementCartCount } from "../redux/features/cart/cartSlice";
 const GameCard = ({ game }: GameCardProps) => {
     const dispatch = useDispatch<AppDispatch>();
 
@@ -116,7 +117,7 @@ const GameCard = ({ game }: GameCardProps) => {
                                 backgroundColor: "#333",
                                 "&:hover": { backgroundColor: "#444" },
                             }}
-                            onClick={() => dispatch(incrementCartCount(game))}
+                            onClick={() => dispatch(decrementCartCount(game))}
                         >
                             -
                         </Button>

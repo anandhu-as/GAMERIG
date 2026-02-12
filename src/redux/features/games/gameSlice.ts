@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { type Game, type GameStateType } from "../../../types/types";
+import { BASE_URL } from "../../../constants/constants";
 const initialState: GameStateType = {
   games: [],
 };
@@ -7,9 +8,7 @@ const initialState: GameStateType = {
 export const fetchGames = createAsyncThunk<Game[]>(
   "games/fetchGames",
   async () => {
-    const response = await fetch(
-      "https://corsproxy.io/?https://www.freetogame.com/api/games",
-    );
+    const response = await fetch(BASE_URL);
     const data = await response.json();
     return data;
   },
