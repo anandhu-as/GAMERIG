@@ -8,6 +8,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import GameCard from "../Components/GameCard";
+import { dropDownStyle, storeBox2Style, storeBoxStyle } from "../constants";
 
 const Store = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -26,7 +27,6 @@ const Store = () => {
       switch (filter) {
         case "mostRated":
           return new Date(game1.release_date).getTime() - new Date(game2.release_date).getTime();
-
         case "popular":
 
           return (game1.rating || 0) - (game2.rating || 0);
@@ -40,14 +40,7 @@ const Store = () => {
     <Box sx={{ padding: 3 }}>
 
       <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          flexWrap: "wrap",
-          gap: 2,
-          mb: 3,
-        }}
+        sx={storeBoxStyle}
       >
         <Typography
           variant="h4"
@@ -62,12 +55,7 @@ const Store = () => {
             onChange={(e) =>
               setFilter(e.target.value as "popular" | "mostRated")
             }
-            sx={{
-              color: "#fff",
-              ".MuiOutlinedInput-notchedOutline": { borderColor: "#fff" },
-              "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#fff" },
-              ".MuiSvgIcon-root": { color: "#fff" },
-            }}
+            sx={dropDownStyle}
           >
             <MenuItem value="popular">Popular</MenuItem>
             <MenuItem value="mostRated">Most Rated</MenuItem>
@@ -78,11 +66,7 @@ const Store = () => {
 
 
       <Box
-        sx={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-          gap: 3,
-        }}
+        sx={storeBox2Style}
       >
         {displayedGames.map((game) => (
           <GameCard key={game.id} game={game} />

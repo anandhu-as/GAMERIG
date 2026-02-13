@@ -13,12 +13,11 @@ import StorefrontIcon from "@mui/icons-material/Storefront";
 import InfoIcon from "@mui/icons-material/Info";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Link } from "react-router-dom";
-import Cart from "./Cart";
+import { Cart } from ".";
 import { useSelector } from "react-redux";
 import type { RootState } from "../redux/store/store";
 const NavBar = () => {
   const [open, setOpen] = useState<boolean>(false);
-
   const cartQuantity = useSelector((state: RootState) => {
     return state.cart.cart.reduce(
       (total, item) => total + item.quantity,

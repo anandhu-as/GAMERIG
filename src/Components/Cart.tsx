@@ -12,7 +12,7 @@ import type { cartItem, CartProp } from "../types/types";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../redux/store/store";
 import { decrementCartCount, incrementCartCount, removeFromCart } from "../redux/features/cart/cartSlice";
-import { cartBoxStyle, cartImgStyle } from "../constants/constants";
+import { cartBoxStyle, cartImgStyle } from "../constants/index";
 const Cart = ({ open, toggleDrawer }: CartProp) => {
     const dispatch = useDispatch<AppDispatch>();
     const cartValues = useSelector((state: RootState) => state.cart.cart);

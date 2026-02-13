@@ -6,23 +6,9 @@ import {
   CardContent,
   Button,
 } from "@mui/material";
+import { aboutCardStyle, aboutDescriptionStyle, BrowseButtonStyle, description, features } from "../constants";
 
 const About = () => {
-  const features = [
-    {
-      title: "Game Discovery",
-      desc: "Browse thousands of games with detailed information, ratings and release data.",
-    },
-    {
-      title: "Detailed Insights",
-      desc: "View genres, platforms, screenshots and gameplay summaries in one place.",
-    },
-    {
-      title: "Trending & Popular",
-      desc: "Stay updated with the most popular and top-rated games worldwide.",
-    },
-  ];
-
   return (
     <Box
       sx={{
@@ -45,10 +31,9 @@ const About = () => {
 
           <Typography
             variant="h6"
-            sx={{ color: "#b3b3b3", maxWidth: 700, mx: "auto" }}
+            sx={aboutDescriptionStyle}
           >
-            A modern platform to explore detailed information about games —
-            discover trending titles, genres, ratings and more.
+            {description}
           </Typography>
         </Box>
 
@@ -77,16 +62,7 @@ const About = () => {
               }}
             >
               <Card
-                sx={{
-                  backgroundColor: "#1a1a1a",
-                  border: "1px solid #2a2a2a",
-                  borderRadius: 2,
-                  height: "100%",
-                  transition: "0.3s",
-                  "&:hover": {
-                    borderColor: "#ffffff",
-                  },
-                }}
+                sx={aboutCardStyle}
               >
                 <CardContent sx={{ p: 4 }}>
                   <Typography variant="h6" fontWeight="bold" gutterBottom>
@@ -109,18 +85,7 @@ const About = () => {
 
           <Button
             variant="contained"
-            sx={{
-              mt: 3,
-              backgroundColor: "#ffffff",
-              color: "#000000",
-              px: 5,
-              py: 1.5,
-              fontWeight: "bold",
-              textTransform: "none",
-              "&:hover": {
-                backgroundColor: "#d6d6d6",
-              },
-            }}
+            sx={BrowseButtonStyle}
           >
             Browse Games
           </Button>
