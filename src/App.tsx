@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom"
 import { ThemeProvider, createTheme, CssBaseline, Box } from "@mui/material"
 import NavBar from "./Components/NavBar"
-import Home from "./Pages/Home"
 import Store from "./Pages/Store"
 import About from "./Pages/About"
 
@@ -29,8 +28,8 @@ const App = () => {
       {/**routesss..... */}
       <Box sx={{ minHeight: '100vh', color: 'white' }}>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/store" element={<Store />} />
+        
+          <Route path="/" element={<Store />} />
           <Route path="/about" element={<About />} />
 
         </Routes>

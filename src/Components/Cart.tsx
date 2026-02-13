@@ -8,25 +8,28 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import DeleteIcon from "@mui/icons-material/Delete";
-import type { CartProp } from "../types/types";
+import type { cartItem, CartProp } from "../types/types";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../redux/store/store";
 import { decrementCartCount, incrementCartCount, removeFromCart } from "../redux/features/cart/cartSlice";
+import { cartBoxStyle, cartImgStyle } from "../constants/constants";
 const Cart = ({ open, toggleDrawer }: CartProp) => {
     const dispatch = useDispatch<AppDispatch>();
     const cartValues = useSelector((state: RootState) => state.cart.cart);
+    ///to handle actionss
+    const handleActions = (actions: string, item: cartItem) => {
+        actions === "decrement" ?
+            dispatch(decrementCartCount(item))
+            : actions === "increment" ?
+                dispatch(incrementCartCount(item))
+                :
+                dispatch(removeFromCart(item))
+
+    }
     return (
         <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
             <Box
-                sx={{
-                    width: 350,
-                    height: "100%",
-                    p: 3,
-                    backgroundColor: "#0f0f0f",
-                    color: "#fff",
-                    display: "flex",
-                    flexDirection: "column"
-                }}
+                sx={cartBoxStyle}
             >
                 <Typography
                     variant="h5"
@@ -35,9 +38,9 @@ const Cart = ({ open, toggleDrawer }: CartProp) => {
                     Your Cart
                 </Typography>
 
-               {cartValues.length<1 ? (
-                <h1>your cart is empty</h1>
-               ): <Box sx={{ flex: 1, overflowY: "auto" }}>
+                {cartValues.length < 1 ? (
+                    <h1>your cart is empty</h1>
+                ) : <Box sx={{ flex: 1, overflowY: "auto" }}>
                     {cartValues.map((item) => (
                         <Box
                             key={item.id}
@@ -53,12 +56,7 @@ const Cart = ({ open, toggleDrawer }: CartProp) => {
                                     component="img"
                                     src={item.thumbnail}
                                     alt={item.title}
-                                    sx={{
-                                        width: 60,
-                                        height: 60,
-                                        objectFit: "cover",
-                                        borderRadius: 2
-                                    }}
+                                    sx={cartImgStyle}
                                 />
 
                                 <Box sx={{ flex: 1 }}>
@@ -75,18 +73,18 @@ const Cart = ({ open, toggleDrawer }: CartProp) => {
                                         }}
                                     >
                                         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                                            <IconButton size="small" sx={{ color: "#fff" }} onClick={() => dispatch(decrementCartCount(item))}> 
-                                                <RemoveIcon fontSize="small"  />
+                                            <IconButton size="small" sx={{ color: "#fff" }} onClick={() => handleActions("decrement", item)}>
+                                                <RemoveIcon fontSize="small" />
                                             </IconButton>
 
                                             <Typography>{item.quantity}</Typography>
 
-                                            <IconButton size="small" sx={{ color: "#fff" }} onClick={() => dispatch(incrementCartCount(item))}>
+                                            <IconButton size="small" sx={{ color: "#fff" }} onClick={() => handleActions("increment", item)}>
                                                 <AddIcon fontSize="small" />
                                             </IconButton>
                                         </Box>
 
-                                        <IconButton sx={{ color: "#ff4d4d" }} onClick={()=>dispatch(removeFromCart(item))}>
+                                        <IconButton sx={{ color: "#ff4d4d" }} onClick={() => handleActions("remove", item)}>
                                             <DeleteIcon />
                                         </IconButton>
                                     </Box>

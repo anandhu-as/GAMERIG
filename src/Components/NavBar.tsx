@@ -8,8 +8,7 @@ import {
   Tooltip,
   Badge,
 } from "@mui/material";
-import { APP_NAME } from "../constants/constants";
-import HomeIcon from "@mui/icons-material/Home";
+import { APP_NAME, APP_NAME_STYLE } from "../constants/constants";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import InfoIcon from "@mui/icons-material/Info";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -27,9 +26,8 @@ const NavBar = () => {
     );
   });
 
-  const toggleDrawer = (newOpen: boolean) => () => {
-    setOpen(newOpen);
-  };
+  const toggleDrawer = (newOpen: boolean) => () => setOpen(newOpen);
+
 
   return (
     <>
@@ -45,28 +43,16 @@ const NavBar = () => {
             variant="h5"
             component={Link}
             to="/"
-            sx={{
-              flexGrow: 1,
-              color: "#fff",
-              textDecoration: "none",
-              fontWeight: 800,
-              letterSpacing: "2px",
-              fontFamily: '"Segoe UI", Roboto, "Helvetica Neue", cursive',
-              textTransform: "uppercase",
-            }}
+            sx={APP_NAME_STYLE}
           >
             {APP_NAME}
           </Typography>
 
           <Box sx={{ display: "flex", gap: 1 }}>
-            <Tooltip title="Home">
-              <IconButton sx={{ color: "#fff" }} component={Link} to="/">
-                <HomeIcon />
-              </IconButton>
-            </Tooltip>
+
 
             <Tooltip title="Store">
-              <IconButton sx={{ color: "#fff" }} component={Link} to="/store">
+              <IconButton sx={{ color: "#fff" }} component={Link} to="/">
                 <StorefrontIcon />
               </IconButton>
             </Tooltip>

@@ -38,4 +38,3 @@ export type CartProp = {
   open: boolean;
   toggleDrawer: (newOpen: boolean) => () => void;
 };
-

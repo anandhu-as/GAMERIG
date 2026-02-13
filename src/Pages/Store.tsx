@@ -19,7 +19,6 @@ const Store = () => {
   useEffect(() => {
     dispatch(fetchGames());
   }, [dispatch]);
-console.log(games);
 
 
   const displayedGames = [...games]
