@@ -12,12 +12,19 @@ import {
   IconButton,
   Snackbar,
   Alert,
+  Paper,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { incrementCartCount, decrementCartCount } from "../redux/features/cart/cartSlice";
-import type { Game, cartItem } from "../types/types";
+import {
+  incrementCartCount,
+  decrementCartCount,
+} from "../redux/features/cart/cartSlice";
+import type { Game } from "../types/types";
+import { gameDetailBox, gameDetailButton, gameDetailCard } from "../constants";
+
+type CartAction = "addtocart" | "increment" | "decrement";
 
 const GameDetail = () => {
   const selectedGame = useSelector(
@@ -30,20 +37,12 @@ const GameDetail = () => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
 
-  if (!selectedGame) {
-    return (
-      <Typography variant="h6" sx={{ p: 4 }}>
-        No game selected
-      </Typography>
-    );
-  }
-
   const existingItem = cartItems.find(
-    (item) => item.id === selectedGame.id
+    (item) => item.id === selectedGame?.id
   );
 
-  const handleAddToCart = (game: Game) => {
-    const cartData: cartItem = {
+  const handleActions = (action: CartAction, game: Game) => {
+    const cartItem = {
       id: game.id,
       thumbnail: game.thumbnail,
       title: game.title,
@@ -53,39 +52,28 @@ const GameDetail = () => {
       quantity: 1,
     };
 
-    dispatch(incrementCartCount(cartData));
-    setOpen(true);
+    if (action === "addtocart" || action === "increment") {
+      dispatch(incrementCartCount(cartItem));
+      if (action === "addtocart") setOpen(true);
+    } else if (action === "decrement") {
+      dispatch(decrementCartCount(game.id));
+    }
   };
 
+  if (!selectedGame) {
+    return (
+      <Typography variant="h6" sx={{ p: 4 }}>
+        No game selected
+      </Typography>
+    );
+  }
+
   return (
-    <Box
-      sx={{
-        minHeight: "100vh",
-        p: { xs: 2, md: 5 },
-        backgroundColor: "#121212",
-        display: "flex",
-        justifyContent: "center",
-      }}
-    >
-      <Card
-        sx={{
-          maxWidth: 1100,
-          width: "100%",
-          backgroundColor: "#1e1e1e",
-          color: "#fff",
-          borderRadius: 3,
-          overflow: "hidden",
-          position: "relative",
-        }}
-      >
+    <Box sx={gameDetailBox}>
+      <Card elevation={8} sx={gameDetailCard}>
         <IconButton
           onClick={() => navigate(-1)}
-          sx={{
-            position: "absolute",
-            top: 10,
-            right: 10,
-            color: "#fff",
-          }}
+          sx={gameDetailButton}
         >
           <CloseIcon />
         </IconButton>
@@ -101,19 +89,28 @@ const GameDetail = () => {
             image={selectedGame.thumbnail}
             alt={selectedGame.title}
             sx={{
-              width: { xs: "100%", md: 320 },
-              height: { xs: 200, md: 220 },
+              width: { xs: "100%", md: 380 },
+              height: { xs: 240, md: 320 },
               objectFit: "cover",
             }}
           />
 
-          <Box sx={{ p: 4, flex: 1 }}>
-            <Typography variant="h4" fontWeight={700} gutterBottom>
+          <Box sx={{ p: { xs: 3, md: 5 }, flex: 1 }}>
+            <Typography
+              variant="h4"
+              fontWeight={700}
+              gutterBottom
+              sx={{ letterSpacing: 0.5 }}
+            >
               {selectedGame.title}
             </Typography>
 
-            <Stack direction="row" spacing={1} mb={2} flexWrap="wrap">
-              <Chip label={selectedGame.genre} color="primary" />
+            <Stack direction="row" spacing={1} mb={3} flexWrap="wrap">
+              <Chip
+                label={selectedGame.genre}
+                color="primary"
+                sx={{ fontWeight: 600 }}
+              />
               <Chip label={selectedGame.platform} />
               <Chip label={selectedGame.publisher} />
             </Stack>
@@ -122,8 +119,8 @@ const GameDetail = () => {
               variant="body1"
               sx={{
                 opacity: 0.85,
-                mb: 3,
-                lineHeight: 1.7,
+                lineHeight: 1.8,
+                fontSize: 16,
               }}
             >
               {selectedGame.short_description}
@@ -131,96 +128,119 @@ const GameDetail = () => {
           </Box>
         </Box>
 
-        <Divider sx={{ borderColor: "#333" }} />
+        <Divider sx={{ borderColor: "rgba(255,255,255,0.1)" }} />
 
-        <Box sx={{ p: 4 }}>
-          <Typography variant="h5" fontWeight={600} mb={2}>
+        {/* 🔹 Bottom Section */}
+        <Box sx={{ p: { xs: 3, md: 5 } }}>
+          <Typography variant="h5" fontWeight={600} mb={3}>
             Game Details
           </Typography>
 
-          <Stack spacing={1}>
-            <Typography>
-              <strong>Developer:</strong> {selectedGame.developer}
-            </Typography>
+          <Paper
+            elevation={0}
+            sx={{
+              p: 3,
+              background: "rgba(255,255,255,0.04)",
+              borderRadius: 3,
+            }}
+          >
+            <Stack spacing={1.5}>
+              <Typography>
+                <strong>Developer:</strong> {selectedGame.developer}
+              </Typography>
 
-            <Typography>
-              <strong>Publisher:</strong> {selectedGame.publisher}
-            </Typography>
+              <Typography>
+                <strong>Publisher:</strong> {selectedGame.publisher}
+              </Typography>
 
-            <Typography>
-              <strong>Release Date:</strong> {selectedGame.release_date}
-            </Typography>
+              <Typography>
+                <strong>Release Date:</strong> {selectedGame.release_date}
+              </Typography>
 
-            <Typography>
-              <strong>Platform:</strong> {selectedGame.platform}
-            </Typography>
+              <Typography>
+                <strong>Platform:</strong> {selectedGame.platform}
+              </Typography>
 
-            <Typography>
-              <strong>Genre:</strong> {selectedGame.genre}
-            </Typography>
+              <Typography>
+                <strong>Genre:</strong> {selectedGame.genre}
+              </Typography>
 
-            <Typography>
-              <strong>Website:</strong>{" "}
-              <a
-                href={selectedGame.game_url}
-                target="_blank"
-                rel="noreferrer"
-                style={{ color: "#90caf9" }}
-              >
-                Visit Official Page
-              </a>
-            </Typography>
+              <Typography>
+                <strong>Website:</strong>{" "}
+                <a
+                  href={selectedGame.game_url}
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{
+                    color: "#64b5f6",
+                    textDecoration: "none",
+                    fontWeight: 600,
+                  }}
+                >
+                  Visit Official Page
+                </a>
+              </Typography>
+            </Stack>
 
             {!existingItem ? (
               <Button
+                fullWidth
                 variant="contained"
-                onClick={() => handleAddToCart(selectedGame)}
+                onClick={() =>
+                  handleActions("addtocart", selectedGame)
+                }
                 sx={{
-                  mt: 2,
-                  backgroundColor: "#45494c",
-                  color: "#fff",
-                  "&:hover": { backgroundColor: "#435161" },
+                  mt: 3,
+                  py: 1.3,
+                  fontWeight: 700,
+                  borderRadius: 2,
+                  background: "#3a3a3a",
+                  "&:hover": {
+                    background:
+                      "linear-gradient(135deg, #5a67d8, #6b46c1)",
+                  },
                 }}
               >
                 Add Game to Cart
               </Button>
             ) : (
-              <Stack direction="row" spacing={2} mt={2} alignItems="center">
+              <Stack
+                direction="row"
+                spacing={2}
+                mt={3}
+                justifyContent="center"
+                alignItems="center"
+              >
                 <Button
                   variant="outlined"
+                  sx={{ minWidth: 45 }}
                   onClick={() =>
-                    dispatch(decrementCartCount(selectedGame.id))
+                    handleActions("decrement", selectedGame)
                   }
                 >
                   -
                 </Button>
 
-                <Typography>{existingItem.quantity}</Typography>
+                <Typography fontWeight={700}>
+                  {existingItem.quantity}
+                </Typography>
 
                 <Button
                   variant="outlined"
+                  sx={{ minWidth: 45 }}
                   onClick={() =>
-                    dispatch(
-                      incrementCartCount({
-                        id: selectedGame.id,
-                        thumbnail: selectedGame.thumbnail,
-                        title: selectedGame.title,
-                        short_description: selectedGame.short_description,
-                        genre: selectedGame.genre,
-                        rating: selectedGame.rating ?? 0,
-                        quantity: 1,
-                      })
-                    )
+                    handleActions("increment", selectedGame)
                   }
                 >
                   +
                 </Button>
               </Stack>
             )}
-          </Stack>
+          </Paper>
         </Box>
       </Card>
 
+  
       <Snackbar
         open={open}
         autoHideDuration={3000}

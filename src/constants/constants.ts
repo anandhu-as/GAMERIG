@@ -141,3 +141,29 @@ export const storeBox2Style = {
   gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
   gap: 3,
 };
+export const gameDetailBox = {
+  minHeight: "100vh",
+  p: { xs: 2, md: 6 },
+  background: "#111",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+};
+export const gameDetailCard = {
+  maxWidth: 1150,
+  width: "100%",
+  borderRadius: 4,
+  overflow: "hidden",
+  backdropFilter: "blur(14px)",
+  background: "rgba(20,20,20,0.9)",
+  color: "#fff",
+  position: "relative",
+};
+export const gameDetailButton = {
+  position: "absolute",
+  top: 12,
+  right: 12,
+  color: "#fff",
+  background: "rgba(255,255,255,0.08)",
+  "&:hover": { background: "rgba(255,255,255,0.18)" },
+};
