@@ -17,9 +17,11 @@ const Store = () => {
     "popular"
   );
 
+
   useEffect(() => {
     dispatch(fetchGames());
   }, [dispatch]);
+
 
 
   const displayedGames = [...games]
