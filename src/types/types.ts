@@ -33,7 +33,6 @@ export type cartItem = {
   genre: string;
   rating: number;
   quantity: number;
- 
 };
 export type CartProp = {
   open: boolean;
