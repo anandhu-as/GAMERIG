@@ -35,6 +35,7 @@ const NavBar = () => {
         sx={{
           backgroundColor: "#000000",
           borderBottom: "1px solid #333",
+          paddingRight:"7px"
         }}
       >
         <Toolbar>

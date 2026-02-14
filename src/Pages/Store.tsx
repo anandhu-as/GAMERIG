@@ -16,6 +16,7 @@ const Store = () => {
   const [filter, setFilter] = useState<"popular" | "mostRated" | "newest">(
     "popular"
   );
+console.log(games);
 
 
   useEffect(() => {

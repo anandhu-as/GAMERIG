@@ -3,6 +3,7 @@ import { ThemeProvider, createTheme, CssBaseline, Box } from "@mui/material"
 import NavBar from "./Components/NavBar"
 import Store from "./Pages/Store"
 import About from "./Pages/About"
+import GameDetail from "./Components/GameDetail"
 
 const darkTheme = createTheme({
   palette: {
@@ -31,6 +32,7 @@ const App = () => {
         
           <Route path="/" element={<Store />} />
           <Route path="/about" element={<About />} />
+          <Route path="/details/:id" element={<GameDetail/>}/>
 
         </Routes>
       </Box>

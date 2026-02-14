@@ -7,26 +7,27 @@ export interface Game {
   release_date: string;
   platform: string;
   genre: string;
-  rating: number;
-  quantity: number;
+  developer: string;
+  publisher: string;
+  freetogame_profile_url: string;
+  rating?: number;
+  quantity?: number;
+}
+
+export interface AboutGameState {
+  selectedGame: Game | null;
 }
 
 export type GameStateType = {
   games: Game[];
 };
+
 export type GameCardProps = {
-  game: {
-    id: string | number;
-    thumbnail: string;
-    title: string;
-    short_description: string;
-    genre: string;
-    rating: number;
-    quantity: number;
-  };
+  game: Game;
 };
+
 export type cartItem = {
-  id: string | number;
+  id: number;
   thumbnail: string;
   title: string;
   short_description: string;
@@ -34,7 +35,11 @@ export type cartItem = {
   rating: number;
   quantity: number;
 };
+
 export type CartProp = {
   open: boolean;
   toggleDrawer: (newOpen: boolean) => () => void;
 };
+export interface CartState {
+  cart: cartItem[];
+}
