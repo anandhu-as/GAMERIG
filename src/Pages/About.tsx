@@ -7,6 +7,7 @@ import {
   Button,
 } from "@mui/material";
 import { aboutCardStyle, aboutDescriptionStyle, BrowseButtonStyle, description, features } from "../constants";
+import { Link } from "react-router-dom";
 
 const About = () => {
   return (
@@ -87,7 +88,7 @@ const About = () => {
             variant="contained"
             sx={BrowseButtonStyle}
           >
-            Browse Games
+            <Link to="/" >Browse Games</Link>
           </Button>
         </Box>
       </Container>

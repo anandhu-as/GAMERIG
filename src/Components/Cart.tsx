@@ -16,6 +16,11 @@ import { cartBoxStyle, cartImgStyle } from "../constants/index";
 const Cart = ({ open, toggleDrawer }: CartProp) => {
     const dispatch = useDispatch<AppDispatch>();
     const cartValues = useSelector((state: RootState) => state.cart.cart);
+
+
+    //to get total items in cart
+
+
     ///to handle actionss
     const handleActions = (actions: string, item: cartItem) => {
         actions === "decrement" ?
@@ -94,7 +99,9 @@ const Cart = ({ open, toggleDrawer }: CartProp) => {
                     ))}
                 </Box>}
                 <Divider sx={{ backgroundColor: "#333", my: 2 }} />
+                <h3>Total Items:</h3>
             </Box>
+
         </Drawer>
     );
 };
