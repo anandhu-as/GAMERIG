@@ -31,11 +31,11 @@ console.log(cartValues);
     const handleActions = (actions: string, item: cartItem) => {
         
         actions === "decrement" ?
-            dispatch(decrementCartCount(item))
+            dispatch(decrementCartCount(item.id))
             : actions === "increment" ?
                 dispatch(incrementCartCount(item))
                 :
-                dispatch(removeFromCart(item))
+                dispatch(removeFromCart(item.id))
 
     }
     return (

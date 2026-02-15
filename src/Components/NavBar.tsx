@@ -84,8 +84,6 @@ const NavBar = () => {
           </Box>
         </Toolbar>
       </AppBar>
-
-      {/* Spacer so content is not hidden behind fixed navbar */}
       <Toolbar />
 
       <Cart open={open} toggleDrawer={toggleDrawer} />
