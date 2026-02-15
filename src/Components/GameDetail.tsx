@@ -21,10 +21,8 @@ import {
   incrementCartCount,
   decrementCartCount,
 } from "../redux/features/cart/cartSlice";
-import type { Game } from "../types/types";
+import type { CartAction, Game } from "../types/types";
 import { gameDetailBox, gameDetailButton, gameDetailCard } from "../constants";
-
-type CartAction = "addtocart" | "increment" | "decrement";
 
 const GameDetail = () => {
   const selectedGame = useSelector(
@@ -130,7 +128,7 @@ const GameDetail = () => {
 
         <Divider sx={{ borderColor: "rgba(255,255,255,0.1)" }} />
 
-    
+
         <Box sx={{ p: { xs: 3, md: 5 } }}>
           <Typography variant="h5" fontWeight={600} mb={3}>
             Game Details

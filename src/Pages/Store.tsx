@@ -16,15 +16,9 @@ const Store = () => {
   const [filter, setFilter] = useState<"popular" | "mostRated" | "newest">(
     "popular"
   );
-console.log(games);
-
-
   useEffect(() => {
     dispatch(fetchGames());
   }, [dispatch]);
-
-
-
   const displayedGames = [...games]
     .sort((game1, game2) => {
       switch (filter) {

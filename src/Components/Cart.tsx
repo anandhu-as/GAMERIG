@@ -3,8 +3,10 @@ import {
     Box,
     Drawer,
     IconButton,
-    Divider
+    Divider,
+    Button
 } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -13,11 +15,9 @@ import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../redux/store/store";
 import { decrementCartCount, incrementCartCount, removeFromCart } from "../redux/features/cart/cartSlice";
 import { cartBoxStyle, cartImgStyle } from "../constants/index";
-const Cart = ({ open, toggleDrawer }: CartProp) => {
+const Cart = ({ open, toggleDrawer ,setOpen}: CartProp) => {
     const dispatch = useDispatch<AppDispatch>();
     const cartValues = useSelector((state: RootState) => state.cart.cart);
-
-console.log(cartValues);
 
     //to get total items in cart
   const cartQuantity = useSelector((state: RootState) => {
@@ -43,6 +43,7 @@ console.log(cartValues);
             <Box
                 sx={cartBoxStyle}
             >
+                <CloseIcon sx={{cursor:"pointer"}} onClick={()=>setOpen(!open)} />
                 <Typography
                     variant="h5"
                     sx={{ fontWeight: 700, mb: 3, textAlign: "center" }}

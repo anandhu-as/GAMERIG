@@ -39,7 +39,10 @@ export type cartItem = {
 export type CartProp = {
   open: boolean;
   toggleDrawer: (newOpen: boolean) => () => void;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
+
 export interface CartState {
   cart: cartItem[];
 }
+export type CartAction = "addtocart" | "increment" | "decrement";

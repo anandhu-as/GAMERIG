@@ -86,7 +86,7 @@ const NavBar = () => {
       </AppBar>
       <Toolbar />
 
-      <Cart open={open} toggleDrawer={toggleDrawer} />
+      <Cart open={open} toggleDrawer={toggleDrawer} setOpen={setOpen} />
     </>
   );
 };
