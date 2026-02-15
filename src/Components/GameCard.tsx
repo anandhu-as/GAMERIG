@@ -44,8 +44,9 @@ const GameCard = ({ game }: GameCardProps) => {
         const item = mapGameToCartItem(game);
 
         if (action === "increment") {
+            quantity === 0 && setOpen(true)
             dispatch(incrementCartCount(item));
-            setOpen(true);
+
         } else {
             dispatch(decrementCartCount(item.id));
         }

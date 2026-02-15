@@ -88,7 +88,18 @@ const About = () => {
             variant="contained"
             sx={BrowseButtonStyle}
           >
-            <Link to="/" >Browse Games</Link>
+            <Link
+              to="/"
+              style={{
+                textDecoration: "none",
+                color: "#111",
+                width: "100%",
+                height: "100%",
+                display: "block",
+              }}
+            >
+              Browse Games
+            </Link>
           </Button>
         </Box>
       </Container>

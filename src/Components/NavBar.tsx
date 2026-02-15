@@ -16,8 +16,11 @@ import { Link } from "react-router-dom";
 import { Cart } from ".";
 import { useSelector } from "react-redux";
 import type { RootState } from "../redux/store/store";
+import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
+
 const NavBar = () => {
   const [open, setOpen] = useState<boolean>(false);
+
   const cartQuantity = useSelector((state: RootState) => {
     return state.cart.cart.reduce(
       (total, item) => total + item.quantity,
@@ -27,15 +30,14 @@ const NavBar = () => {
 
   const toggleDrawer = (newOpen: boolean) => () => setOpen(newOpen);
 
-
   return (
     <>
       <AppBar
-        position="static"
+        position="fixed"
         sx={{
           backgroundColor: "#000000",
           borderBottom: "1px solid #333",
-          paddingRight:"7px"
+          paddingRight: "7px",
         }}
       >
         <Toolbar>
@@ -43,14 +45,23 @@ const NavBar = () => {
             variant="h5"
             component={Link}
             to="/"
-            sx={APP_NAME_STYLE}
+            sx={{
+              ...APP_NAME_STYLE,
+              display: "flex",
+              alignItems: "center",
+              gap: "6px",
+            }}
           >
             {APP_NAME}
+            <SportsEsportsIcon
+              sx={{
+                color: "#ffffff",
+                fontSize: 28,
+              }}
+            />
           </Typography>
 
-          <Box sx={{ display: "flex", gap: 1 }}>
-
-
+          <Box sx={{ display: "flex", gap: 1, marginLeft: "auto" }}>
             <Tooltip title="Store">
               <IconButton sx={{ color: "#fff" }} component={Link} to="/">
                 <StorefrontIcon />
@@ -62,11 +73,9 @@ const NavBar = () => {
                 <InfoIcon />
               </IconButton>
             </Tooltip>
+
             <Tooltip title="Cart">
-              <IconButton
-                sx={{ color: "#fff" }}
-                onClick={toggleDrawer(true)}
-              >
+              <IconButton sx={{ color: "#fff" }} onClick={toggleDrawer(true)}>
                 <Badge badgeContent={cartQuantity} color="error">
                   <ShoppingCartIcon />
                 </Badge>
@@ -75,6 +84,9 @@ const NavBar = () => {
           </Box>
         </Toolbar>
       </AppBar>
+
+      {/* Spacer so content is not hidden behind fixed navbar */}
+      <Toolbar />
 
       <Cart open={open} toggleDrawer={toggleDrawer} />
     </>
