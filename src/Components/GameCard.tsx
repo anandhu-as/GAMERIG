@@ -6,6 +6,8 @@ import {
     Button,
     Typography,
     Box,
+    Snackbar,
+    Alert,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { type cartItem, type Game, type GameCardProps } from "../types/types";
@@ -14,10 +16,12 @@ import { decrementCartCount, incrementCartCount } from "../redux/features/cart/c
 import { descriptionStyle, GameCardStyle, incrementButtonStyle, quantityBoxStyle, viewDetailButtonStyle } from "../constants/constants";
 import { setGameDetail } from "../redux/features/games/aboutGameSlice";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 type CartAction = "increment" | "decrement";
 
 const GameCard = ({ game }: GameCardProps) => {
+    const [open, setOpen] = useState<boolean>(false);
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
 
@@ -38,8 +42,10 @@ const GameCard = ({ game }: GameCardProps) => {
 
     const handleActions = (action: CartAction, game: Game) => {
         const item = mapGameToCartItem(game);
+
         if (action === "increment") {
             dispatch(incrementCartCount(item));
+            setOpen(true);
         } else {
             dispatch(decrementCartCount(item.id));
         }
@@ -51,70 +57,91 @@ const GameCard = ({ game }: GameCardProps) => {
     };
 
     return (
-        <Card sx={GameCardStyle}>
-            <CardMedia
-                component="img"
-                image={game.thumbnail}
-                title={game.title}
-                sx={{ height: 190, objectFit: "cover" }}
-            />
+        <>
+            <Card sx={GameCardStyle}>
+                <CardMedia
+                    component="img"
+                    image={game.thumbnail}
+                    title={game.title}
+                    sx={{ height: 190, objectFit: "cover" }}
+                />
 
-            <CardContent sx={{ flexGrow: 1 }}>
-                <Typography gutterBottom variant="h6" fontWeight={700}>
-                    {game.title}
-                </Typography>
-                <Typography variant="caption" sx={{ display: "block", mb: 1, opacity: 0.7 }}>
-                    {game.genre}
-                </Typography>
-                <Typography variant="body2" sx={descriptionStyle}>
-                    {game.short_description}
-                </Typography>
-            </CardContent>
+                <CardContent sx={{ flexGrow: 1 }}>
+                    <Typography gutterBottom variant="h6" fontWeight={700}>
+                        {game.title}
+                    </Typography>
+                    <Typography variant="caption" sx={{ display: "block", mb: 1, opacity: 0.7 }}>
+                        {game.genre}
+                    </Typography>
+                    <Typography variant="body2" sx={descriptionStyle}>
+                        {game.short_description}
+                    </Typography>
+                </CardContent>
 
-            <CardActions sx={{ p: 2, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                {quantity > 0 ? (
-                    <Box sx={quantityBoxStyle}>
+                <CardActions
+                    sx={{
+                        p: 2,
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                    }}
+                >
+                    {quantity > 0 ? (
+                        <Box sx={quantityBoxStyle}>
+                            <Button
+                                size="small"
+                                variant="contained"
+                                sx={{ minWidth: 32, backgroundColor: "#333", "&:hover": { backgroundColor: "#444" } }}
+                                onClick={() => handleActions("decrement", game)}
+                            >
+                                -
+                            </Button>
+
+                            <Typography variant="subtitle1" fontWeight={600}>
+                                {quantity}
+                            </Typography>
+
+                            <Button
+                                size="small"
+                                variant="contained"
+                                sx={{ minWidth: 32, backgroundColor: "#333", "&:hover": { backgroundColor: "#444" } }}
+                                onClick={() => handleActions("increment", game)}
+                            >
+                                +
+                            </Button>
+                        </Box>
+                    ) : (
                         <Button
                             size="small"
                             variant="contained"
-                            sx={{ minWidth: 32, backgroundColor: "#333", "&:hover": { backgroundColor: "#444" } }}
-                            onClick={() => handleActions("decrement", game)}
-                        >
-                            -
-                        </Button>
-                        <Typography variant="subtitle1" fontWeight={600}>
-                            {quantity}
-                        </Typography>
-                        <Button
-                            size="small"
-                            variant="contained"
-                            sx={{ minWidth: 32, backgroundColor: "#333", "&:hover": { backgroundColor: "#444" } }}
+                            sx={incrementButtonStyle}
                             onClick={() => handleActions("increment", game)}
                         >
-                            +
+                            Add Game
                         </Button>
-                    </Box>
-                ) : (
+                    )}
+
                     <Button
                         size="small"
-                        variant="contained"
-                        sx={incrementButtonStyle}
-                        onClick={() => handleActions("increment", game)}
+                        variant="outlined"
+                        sx={viewDetailButtonStyle}
+                        onClick={handleViewDetails}
                     >
-                        Add Game
+                        View Details
                     </Button>
-                )}
+                </CardActions>
+            </Card>
 
-                <Button
-                    size="small"
-                    variant="outlined"
-                    sx={viewDetailButtonStyle}
-                    onClick={handleViewDetails}
-                >
-                    View Details
-                </Button>
-            </CardActions>
-        </Card>
+            <Snackbar
+                open={open}
+                autoHideDuration={3000}
+                onClose={() => setOpen(false)}
+            >
+                <Alert severity="success" variant="filled" onClose={() => setOpen(false)}>
+                    Game added to cart 🎮
+                </Alert>
+            </Snackbar>
+        </>
     );
 };
 
