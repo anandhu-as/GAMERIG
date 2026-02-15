@@ -130,7 +130,7 @@ const GameDetail = () => {
 
         <Divider sx={{ borderColor: "rgba(255,255,255,0.1)" }} />
 
-        {/* 🔹 Bottom Section */}
+    
         <Box sx={{ p: { xs: 3, md: 5 } }}>
           <Typography variant="h5" fontWeight={600} mb={3}>
             Game Details
@@ -197,7 +197,7 @@ const GameDetail = () => {
                   background: "#3a3a3a",
                   "&:hover": {
                     background:
-                      "linear-gradient(135deg, #5a67d8, #6b46c1)",
+                      "#49565e",
                   },
                 }}
               >
@@ -240,7 +240,7 @@ const GameDetail = () => {
         </Box>
       </Card>
 
-  
+
       <Snackbar
         open={open}
         autoHideDuration={3000}

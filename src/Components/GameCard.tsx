@@ -14,28 +14,39 @@ import { decrementCartCount, incrementCartCount } from "../redux/features/cart/c
 import { descriptionStyle, GameCardStyle, incrementButtonStyle, quantityBoxStyle, viewDetailButtonStyle } from "../constants/constants";
 import { setGameDetail } from "../redux/features/games/aboutGameSlice";
 import { useNavigate } from "react-router-dom";
+
+type CartAction = "increment" | "decrement";
+
 const GameCard = ({ game }: GameCardProps) => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
-   
- 
-    
-    const quantity = useSelector((state: RootState) =>
-        state.cart.cart.find((item) => item.id === game.id)?.quantity ?? 0
+
+    const quantity = useSelector(
+        (state: RootState) =>
+            state.cart.cart.find((item) => item.id === game.id)?.quantity ?? 0
     );
 
-    const handleActions = (action: string, game: cartItem) => {
-        action === "increment"
-            ? dispatch(incrementCartCount(game))
-            : action === "decrement"
-                ? dispatch(decrementCartCount(game))
-                : "";
+    const mapGameToCartItem = (game: Game): cartItem => ({
+        id: game.id,
+        thumbnail: game.thumbnail,
+        title: game.title,
+        short_description: game.short_description,
+        genre: game.genre,
+        rating: game.rating ?? 0,
+        quantity: 1,
+    });
+
+    const handleActions = (action: CartAction, game: Game) => {
+        const item = mapGameToCartItem(game);
+        if (action === "increment") {
+            dispatch(incrementCartCount(item));
+        } else {
+            dispatch(decrementCartCount(item.id));
+        }
     };
 
     const handleViewDetails = () => {
-
-        dispatch(setGameDetail(game as Game));
-
+        dispatch(setGameDetail(game));
         navigate(`/details/${game.id}`);
     };
 
@@ -67,9 +78,9 @@ const GameCard = ({ game }: GameCardProps) => {
                             size="small"
                             variant="contained"
                             sx={{ minWidth: 32, backgroundColor: "#333", "&:hover": { backgroundColor: "#444" } }}
-                            onClick={() => handleActions("increment", game as cartItem)}
+                            onClick={() => handleActions("decrement", game)}
                         >
-                            +
+                            -
                         </Button>
                         <Typography variant="subtitle1" fontWeight={600}>
                             {quantity}
@@ -78,9 +89,9 @@ const GameCard = ({ game }: GameCardProps) => {
                             size="small"
                             variant="contained"
                             sx={{ minWidth: 32, backgroundColor: "#333", "&:hover": { backgroundColor: "#444" } }}
-                            onClick={() => handleActions("decrement", game as cartItem)}
+                            onClick={() => handleActions("increment", game)}
                         >
-                            -
+                            +
                         </Button>
                     </Box>
                 ) : (
@@ -88,7 +99,7 @@ const GameCard = ({ game }: GameCardProps) => {
                         size="small"
                         variant="contained"
                         sx={incrementButtonStyle}
-                        onClick={() => handleActions("increment", game as cartItem)}
+                        onClick={() => handleActions("increment", game)}
                     >
                         Add Game
                     </Button>
